@@ -36,7 +36,9 @@ public class TestForm {
         $x("//input[@ name='location']").setValue("Amsterdam");
         $x("//*[contains(@name, 'field_1')]//*[@value='u']").click();
         $x("//textarea[@ name='field_2']").setValue("Test text");
-        $x("//span[@role='checkbox']//aria-checked").selectOptionContainingText("true");
+        switchTo().frame($(By.xpath("//iFrame[@title='reCAPTCHA']")).shouldBe(visible));
+        $x("//div[@class='recaptcha-checkbox-border']").click();
+        switchTo().parentFrame();
 
 
     }
