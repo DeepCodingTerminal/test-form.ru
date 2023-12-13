@@ -4,6 +4,7 @@ import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import pages.RegistrationPage;
 
 import java.io.File;
 
@@ -16,28 +17,25 @@ public class TestForm {
         Configuration.baseUrl = "https://www.yaplakal.com/";
         Configuration.browserSize = "2560x1440";
         Configuration.holdBrowserOpen = false;
-        Configuration.pageLoadTimeout = 60000;
     }
 
     @Test
     void successFillTest() throws InterruptedException {
-        open("https://www.yaplakal.com/act/Reg/CODE/00");
 
-        $x("//input[@ name='UserName']").setValue("Mihail");
-        $x("//input[@ name='PassWord']").setValue("12345678");
-        $x("//input[@ name='PassWord_Check']").setValue("12345678");
-        $x("//input[@ name='EmailAddress']").setValue("test@test.ru");
-        $x("//input[@ name='EmailAddress_two']").setValue("test@test.ru");
+        new RegistrationPage().openPage();
+        new RegistrationPage().setUserName("Mihail");
+        new RegistrationPage().setPassWord("12345678");
+        new RegistrationPage().setPassWord_Check("12345678");
+        new RegistrationPage().setEmailAddress("test@test.ru");
+        new RegistrationPage().setEmailAddress_two("test@test.ru");
+        new RegistrationPage().selectDate();
+        new RegistrationPage().inputDay();
+        new RegistrationPage().inputMonth();
+        new RegistrationPage().inputYear();
+        new RegistrationPage().selectLocation("Amsterdam");
+        new RegistrationPage().openReCAPTCHA();
+        new RegistrationPage().clickReCAPTCHA();
 
-        $x("//select[@ name='day']").click();
-        $x("//*[contains(@name, 'day')]//*[@value='8']").click();
-        $x("//*[contains(@name, 'month')]//*[@value='8']").click();
-        $x("//*[contains(@name, 'year')]//*[@value='1998']").click();
-        $x("//input[@ name='location']").setValue("Amsterdam");
-        $x("//*[contains(@name, 'field_1')]//*[@value='u']").click();
-        $x("//textarea[@ name='field_2']").setValue("Test text");
-        switchTo().frame($(By.xpath("//iFrame[@title='reCAPTCHA']")).shouldBe(visible));
-        $x("//div[@class='recaptcha-checkbox-border']").click();
         switchTo().parentFrame();
 
 
